@@ -4,8 +4,7 @@ import os
 
 app = Flask(__name__)
 
-db_path = os.path.join('/tmp', 'tasks.db')
-app.config["SQLALCHEMY_DATABASE_URI"] = f'sqlite:///{db_path}'
+app.config["SQLALCHEMY_DATABASE_URI"] = f'sqlite:///tasks.db'
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
