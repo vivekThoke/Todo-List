@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Task</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1e1e2f, #3e3e5f);
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            justify-content: center;
+        }
+        h1 {
+            color: #fff;
+            margin-bottom: 20px;
+        }
+        form {
+            background: #2e2e4f;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            width: 300px;
+        }
+        label {
+            margin-bottom: 10px;
+            color: #fff;
+        }
+        input[type="text"] {
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #3e3e5f;
+            color: #fff;
+        }
+        button {
+            padding: 10px 20px;
+            background: linear-gradient(45deg, #ff6347, #ff4500);
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        button i {
+            margin-right: 5px;
+        }
+        .back-link {
+            margin-top: 20px;
+            text-decoration: none;
+            color: #ff6347;
+        }
+        .popup {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4caf50;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            display: none;
+        }
+        .popup.error {
+            background: #f44336;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <h1>Edit Task</h1>
+    <form method="POST" onsubmit="return validateForm()">
+        <label for="task">Task Description:</label>
+        <input type="text" id="task" name="task" value="{{ task.description }}">
+        <button type="submit"><i class="fas fa-save"></i> Save Task</button>
+    </form>
+    <a href="{{ url_for('home') }}" class="back-link">Back to Todo List</a>
+    <div class="popup" id="popup"></div>
+    <script>
+        function validateForm() {
+            const taskInput = document.getElementById('task');
+            if (taskInput.value.trim() === '') {
+                showPopup('Task description cannot be empty', 'error');
+                return false;
+            }
+            showPopup('Task updated successfully');
+            return true;
+        }
+
+        function showPopup(message, type) {
+            const popup = document.getElementById('popup');
+            popup.textContent = message;
+            popup.className = 'popup';
+            if (type === 'error') {
+                popup.classList.add('error');
+            }
+            popup.style.display = 'block';
+            setTimeout(() => {
+                popup.style.display = 'none';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
